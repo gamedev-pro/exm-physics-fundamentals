@@ -4,15 +4,14 @@ public class ProjectileLauncher : MonoBehaviour
 {
     [SerializeField] private float maxSpeed = 10;
 
-    [Tooltip("Tamanho maxima para o vetor de lancamento. Apenas cosmetico.")]
-    [SerializeField] private float visualMaxLaunchVectorLength = 2;
-
     [SerializeField] private float gravity = 9.5f;
 
     [SerializeField] float simulationDeltaTime = 0.1f;
 
-    [SerializeField] private Projectile projectilePrefab;
-
+    [Space]
+    [Header("Visuals")]
+    [Tooltip("Tamanho maxima para o vetor de lancamento. Apenas cosmetico.")]
+    [SerializeField] private float visualMaxLaunchVectorLength = 2;
     [SerializeField] private Transform graphics;
     [SerializeField] private Transform muzzleStart;
 
@@ -49,13 +48,6 @@ public class ProjectileLauncher : MonoBehaviour
             var zRot = Mathf.Acos(mouseInputFromLaunchPos.x / mouseInputFromLaunchPos.magnitude) * Mathf.Rad2Deg;
             var currentRot = graphics.rotation.eulerAngles;
             graphics.rotation = Quaternion.Euler(currentRot.x, currentRot.y, zRot);
-        }
-
-        if (aiming && Input.GetMouseButtonUp(0))
-        {
-            aiming = false;
-            var projectile = Instantiate(projectilePrefab);
-            projectile.Initialize(NewPhysicsPoint());
         }
     }
 
