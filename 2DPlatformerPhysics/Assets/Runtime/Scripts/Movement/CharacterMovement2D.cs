@@ -16,9 +16,29 @@ public class CharacterMovement2D : MonoBehaviour
 
     [SerializeField] private float timeToJumpApex = 0.5f;
 
+    [SerializeField] private float jumpAbortGravityMultiplier = 2.0f;
+
+    [SerializeField] private float fallGravityMultiplier = 1.5f;
+
     private float GroundAcceleration => maxGroundSpeed / timeToMaxGroundSpeedSeconds;
     private float JumpSpeed => 2 * jumpHeight / timeToJumpApex;
-    private float Gravity => -JumpSpeed / timeToJumpApex;
+    private float Gravity
+    {
+        get
+        {
+            var g = -JumpSpeed / timeToJumpApex;
+            var multiplier = 1.0f;
+            if (velocity.y < 0)
+            {
+                multiplier = fallGravityMultiplier;
+            }
+            else if (velocity.y > 0 && isJumping && wasJumpAborted)
+            {
+                multiplier = jumpAbortGravityMultiplier;
+            }
+            return g * multiplier;
+        }
+    }
 
     private Rigidbody2D rb;
 
@@ -28,6 +48,9 @@ public class CharacterMovement2D : MonoBehaviour
     private Vector2 input;
 
     private bool isGrounded;
+
+    private bool isJumping;
+    private bool wasJumpAborted;
 
     private Vector2 Position => transform.position;
 
@@ -43,6 +66,11 @@ public class CharacterMovement2D : MonoBehaviour
         velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, GroundAcceleration * Time.fixedDeltaTime);
 
         velocity.y += Gravity * Time.fixedDeltaTime;
+
+        if (isJumping && velocity.y > 0 && wasJumpAborted)
+        {
+            velocity.y -= jumpAbortGravityMultiplier * Time.fixedDeltaTime;
+        }
 
         CheckVerticalCollision(ref velocity);
 
@@ -71,6 +99,8 @@ public class CharacterMovement2D : MonoBehaviour
                 if (hit)
                 {
                     isGrounded = true;
+                    isJumping = false;
+                    wasJumpAborted = false;
                     velocity.y = 0;
                 }
 
@@ -104,9 +134,18 @@ public class CharacterMovement2D : MonoBehaviour
 
     public void Jump()
     {
-        if (isGrounded)
+        if (isGrounded && !isJumping)
         {
+            isJumping = true;
             velocity.y = JumpSpeed;
+        }
+    }
+
+    public void AbortJump()
+    {
+        if (isJumping)
+        {
+            wasJumpAborted = true;
         }
     }
 }

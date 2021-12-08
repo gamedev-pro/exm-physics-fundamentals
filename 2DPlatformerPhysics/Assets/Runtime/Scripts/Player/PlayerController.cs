@@ -19,5 +19,10 @@ public class PlayerController : MonoBehaviour
         {
             characterMovement.Jump();
         }
+
+        if (!playerInput.IsJumpButtonHeld)
+        {
+            characterMovement.AbortJump();
+        }
     }
 }
