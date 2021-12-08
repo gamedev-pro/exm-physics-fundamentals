@@ -5,10 +5,14 @@ public class CharacterMovement2D : MonoBehaviour
 {
     [SerializeField] private float maxGroundSpeed = 10;
 
-    [SerializeField] private float groundAcc = 10;
-    [SerializeField] private float jumpSpeed = 100;
+    [SerializeField] private float timeToMaxGroundSpeedSeconds = 0.2f;
+    [SerializeField] private float jumpHeight = 100;
 
-    [SerializeField] private float gravity = 40;
+    [SerializeField] private float timeToJumpApex = 0.5f;
+
+    private float GroundAcceleration => maxGroundSpeed / timeToMaxGroundSpeedSeconds;
+    private float JumpSpeed => 2 * jumpHeight / timeToJumpApex;
+    private float Gravity => -JumpSpeed / timeToJumpApex;
 
     private Rigidbody2D rb;
 
@@ -23,9 +27,9 @@ public class CharacterMovement2D : MonoBehaviour
     private void FixedUpdate()
     {
         var targetVelocityX = input.x * maxGroundSpeed;
-        velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, groundAcc * Time.fixedDeltaTime);
+        velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, GroundAcceleration * Time.fixedDeltaTime);
 
-        velocity.y -= gravity * Time.fixedDeltaTime;
+        velocity.y += Gravity * Time.fixedDeltaTime;
 
         rb.velocity = velocity;
     }
@@ -37,7 +41,7 @@ public class CharacterMovement2D : MonoBehaviour
 
     public void Jump()
     {
-        velocity.y = jumpSpeed;
+        velocity.y = JumpSpeed;
     }
 
     private void OnDrawGizmos()

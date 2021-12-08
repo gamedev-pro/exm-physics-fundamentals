@@ -436,9 +436,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxGroundSpeed: 8
-  groundAcc: 30
-  jumpSpeed: 30
-  gravity: 100
+  timeToMaxGroundSpeedSeconds: 0.25
+  jumpHeight: 5
+  timeToJumpApex: 0.3
 --- !u!1 &1728115687
 GameObject:
   m_ObjectHideFlags: 0
