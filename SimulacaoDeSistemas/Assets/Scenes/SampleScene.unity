@@ -236,10 +236,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 30
-  visualMaxLaunchVectorLength: 2
   gravity: 47.5
   simulationDeltaTime: 0.1
-  projectilePrefab: {fileID: -7879263833303358598, guid: 7200cc3cb29e61c47862159bdbd5c4d7, type: 3}
+  visualMaxLaunchVectorLength: 3
   graphics: {fileID: 616500860}
   muzzleStart: {fileID: 1828697081}
 --- !u!4 &411135878

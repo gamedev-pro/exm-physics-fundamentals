@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PhysicsPoint
+public class SimpleRigidBody2D
 {
     public Vector2 Position;
     public Vector2 Velocity;
@@ -9,7 +9,7 @@ public class PhysicsPoint
 
 public static class PhysicsUtils
 {
-    public static Vector2[] SimulateParabolicTrajectory(PhysicsPoint launchPoint, float endY, float dt)
+    public static Vector2[] SimulateParabolicTrajectory(SimpleRigidBody2D launchPoint, float endY, float dt)
     {
         return new Vector2[0];
     }
