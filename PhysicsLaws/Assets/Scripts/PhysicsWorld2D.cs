@@ -13,6 +13,11 @@ public class PhysicsWorld2D : MonoBehaviour
         rbs.Add(rb);
     }
 
+    public void Unregister(SimpleRigidbody2D rb)
+    {
+        rbs.Remove(rb);
+    }
+
     private void FixedUpdate()
     {
         Simulate(Time.fixedDeltaTime);

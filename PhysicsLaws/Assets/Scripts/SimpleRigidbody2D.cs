@@ -20,4 +20,11 @@ public class SimpleRigidbody2D : MonoBehaviour
         var physicsWorld = FindObjectOfType<PhysicsWorld2D>();
         physicsWorld.Register(this);
     }
+
+    private void OnDestroy()
+    {
+        //TODO: PhysicsWorld2D deve ser um singleton
+        var physicsWorld = FindObjectOfType<PhysicsWorld2D>();
+        physicsWorld.Unregister(this);
+    }
 }
