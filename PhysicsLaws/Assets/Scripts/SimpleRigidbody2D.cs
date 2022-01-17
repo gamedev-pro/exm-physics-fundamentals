@@ -12,7 +12,11 @@ public class SimpleRigidbody2D : MonoBehaviour
 
     public Vector2 Velocity;
 
-    public Vector2 Acceleration;
+    [SerializeField] private float mass = 1;
+
+    public Vector2 Force;
+
+    public float InverseMass => Mathf.Approximately(mass, 0.0f) ? 1.0f : 1.0f / mass;
 
     private void Awake()
     {
@@ -25,6 +29,9 @@ public class SimpleRigidbody2D : MonoBehaviour
     {
         //TODO: PhysicsWorld2D deve ser um singleton
         var physicsWorld = FindObjectOfType<PhysicsWorld2D>();
-        physicsWorld.Unregister(this);
+        if (physicsWorld != null)
+        {
+            physicsWorld.Unregister(this);
+        }
     }
 }
