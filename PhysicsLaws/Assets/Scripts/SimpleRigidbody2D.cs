@@ -1,7 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+
+//Ref: https://answers.unity.com/questions/802181/trying-to-understand-rigidbody-forcemode-derivatio.html
+public enum SimpleForceMode
+{
+    // Aplica uma força gradual ao corpo rigido, em uma frame
+    Force,
+
+    // Aplica toda a força nesta frame
+    Impulse,
+
+    // = SimpleForceMode.Force, mas desconsidera a massa (F = a)
+    Acceleration,
+
+    // = SimpleForceMode.Impulse, mas desconsidera massa (F = a)
+    VelocityChange
+}
 
 public class SimpleRigidbody2D : MonoBehaviour
 {
@@ -11,15 +25,18 @@ public class SimpleRigidbody2D : MonoBehaviour
         set => transform.position = value;
     }
 
-    public Vector2 Velocity;
-
     [SerializeField] private float mass = 1;
 
-    public Vector2 Force;
+    public Vector2 Velocity;
 
-    public float LinearDrag;
+    [field: SerializeField]
+    public float LinearDrag { get; private set; }
 
     public float InverseMass { get; private set; }
+
+    public Vector2 InstantNetForce { get; private set; }
+
+    public Vector2 NetForce { get; private set; }
 
     private void Awake()
     {
@@ -48,5 +65,31 @@ public class SimpleRigidbody2D : MonoBehaviour
     {
         Assert.IsFalse(Mathf.Approximately(mass, 0), "0 mass not accepted");
         InverseMass = Mathf.Approximately(mass, 0) ? 0 : 1.0f / mass;
+    }
+
+    public void ResetForces()
+    {
+        NetForce = InstantNetForce = Vector2.zero;
+    }
+
+    public void AddForce(Vector2 force, SimpleForceMode mode)
+    {
+        switch (mode)
+        {
+            case SimpleForceMode.Force:
+                NetForce += force;
+                break;
+            case SimpleForceMode.Impulse:
+                InstantNetForce += force;
+                break;
+            case SimpleForceMode.Acceleration:
+                NetForce += (force / InverseMass);
+                break;
+            case SimpleForceMode.VelocityChange:
+                InstantNetForce += (force / InverseMass);
+                break;
+            default:
+                throw new System.NotImplementedException($"Unexpected ForceMode: {mode}");
+        }
     }
 }
