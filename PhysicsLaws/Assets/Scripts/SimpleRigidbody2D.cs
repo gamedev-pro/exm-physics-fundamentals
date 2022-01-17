@@ -30,9 +30,11 @@ public class SimpleRigidbody2D : MonoBehaviour
     public Vector2 Velocity;
 
     [field: SerializeField]
-    public float LinearDrag { get; private set; }
+    public float LinearDrag { get; set; }
 
     public float InverseMass { get; private set; }
+
+    public float Mass => mass;
 
     public Vector2 InstantNetForce { get; private set; }
 
