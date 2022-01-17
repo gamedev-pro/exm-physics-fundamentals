@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class SimpleRigidbody2D : MonoBehaviour
 {
@@ -16,10 +17,13 @@ public class SimpleRigidbody2D : MonoBehaviour
 
     public Vector2 Force;
 
-    public float InverseMass => Mathf.Approximately(mass, 0.0f) ? 1.0f : 1.0f / mass;
+    public float LinearDrag;
+
+    public float InverseMass { get; private set; }
 
     private void Awake()
     {
+        UpdateInverseMass();
         //TODO: PhysicsWorld2D deve ser um singleton
         var physicsWorld = FindObjectOfType<PhysicsWorld2D>();
         physicsWorld.Register(this);
@@ -33,5 +37,16 @@ public class SimpleRigidbody2D : MonoBehaviour
         {
             physicsWorld.Unregister(this);
         }
+    }
+
+    private void OnValidate()
+    {
+        UpdateInverseMass();
+    }
+
+    private void UpdateInverseMass()
+    {
+        Assert.IsFalse(Mathf.Approximately(mass, 0), "0 mass not accepted");
+        InverseMass = Mathf.Approximately(mass, 0) ? 0 : 1.0f / mass;
     }
 }

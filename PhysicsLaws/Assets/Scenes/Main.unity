@@ -153,9 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f08e4e9452de8ca40bcaf4654b2d243f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocity: {x: 0, y: 0}
+  Velocity: {x: 5, y: 0}
   mass: 10
-  Force: {x: 100, y: 0}
+  Force: {x: -5, y: 0}
+  LinearDrag: 0
 --- !u!212 &24345029
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -378,9 +379,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f08e4e9452de8ca40bcaf4654b2d243f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocity: {x: 0, y: 0}
+  Velocity: {x: 5, y: 0}
   mass: 1
-  Force: {x: 100, y: 0}
+  Force: {x: -5, y: 0}
+  LinearDrag: 0
 --- !u!212 &1516476100
 SpriteRenderer:
   m_ObjectHideFlags: 0
