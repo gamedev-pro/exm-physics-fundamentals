@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -30,6 +28,10 @@ public class PhysicsWorld2D : MonoBehaviour
             var frameAcc = (rb.NetForce * rb.InverseMass * dt) + rb.InstantNetForce * rb.InverseMass;
             rb.Velocity = (rb.Velocity + frameAcc) * (1 - dt * rb.LinearDrag);
             rb.Position += rb.Velocity * dt;
+
+            var frameAngularAcc = rb.AngularAcceleration * dt;
+            rb.AngularVelocity = (rb.AngularVelocity + frameAngularAcc) * (1 - dt * rb.AngularDrag);
+            rb.Orientation += rb.AngularVelocity * dt;
             rb.ResetForces();
         }
     }

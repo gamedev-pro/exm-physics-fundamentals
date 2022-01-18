@@ -19,11 +19,6 @@ public enum SimpleForceMode
 
 public class SimpleRigidbody2D : MonoBehaviour
 {
-    public Vector2 Position
-    {
-        get => transform.position;
-        set => transform.position = value;
-    }
 
     [SerializeField] private float mass = 1;
 
@@ -31,6 +26,31 @@ public class SimpleRigidbody2D : MonoBehaviour
 
     [field: SerializeField]
     public float LinearDrag { get; set; }
+
+    public float AngularVelocity;
+
+    public float AngularAcceleration;
+
+    [field: SerializeField]
+    public float AngularDrag { get; set; }
+
+
+    public Vector2 Position
+    {
+        get => transform.position;
+        set => transform.position = value;
+    }
+
+    public float Orientation
+    {
+        get => transform.rotation.eulerAngles.z;
+        set
+        {
+            var rot = transform.rotation.eulerAngles;
+            rot.z = value;
+            transform.rotation = Quaternion.Euler(rot);
+        }
+    }
 
     public float InverseMass { get; private set; }
 
