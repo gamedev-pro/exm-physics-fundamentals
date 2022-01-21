@@ -4,6 +4,7 @@ using UnityEngine;
 public class ForceAccumulator : MonoBehaviour
 {
     [SerializeField] private Vector2 force;
+    [SerializeField] private float torque;
     [SerializeField] private SimpleForceMode forceMode;
 
     private SimpleRigidbody2D rb;
@@ -16,6 +17,7 @@ public class ForceAccumulator : MonoBehaviour
     private void Update()
     {
         rb.AddForce(force, forceMode);
+        rb.AddTorque(torque, forceMode);
         RefreshEnabledState();
     }
 
