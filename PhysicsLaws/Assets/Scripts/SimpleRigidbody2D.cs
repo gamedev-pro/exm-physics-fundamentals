@@ -18,6 +18,9 @@ public class SimpleRigidbody2D : MonoBehaviour
 
     public Vector2 Force;
 
+    [Min(0)]
+    public float LinearDrag;
+
     public float InverseMass { get; private set; }
 
     private void Awake()
@@ -33,7 +36,10 @@ public class SimpleRigidbody2D : MonoBehaviour
     {
         //TODO: PhysicsWorld2D deve ser um singleton
         var physicsWorld = FindObjectOfType<PhysicsWorld2D>();
-        physicsWorld.Unregister(this);
+        if (physicsWorld != null)
+        {
+            physicsWorld.Unregister(this);
+        }
     }
 
     private void OnValidate()
