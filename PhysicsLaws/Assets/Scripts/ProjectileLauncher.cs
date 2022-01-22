@@ -58,7 +58,8 @@ public class ProjectileLauncher : MonoBehaviour
             var point = GetLaunchParameters();
             projectile.Rb.Position = point.Position;
             projectile.Rb.Velocity = point.Velocity;
-            projectile.Rb.Acceleration = new Vector2(0, -gravity);
+            //TODO: Trocar aceleracao por forca
+            /* projectile.Rb.Acceleration = new Vector2(0, -gravity); */
         }
     }
 

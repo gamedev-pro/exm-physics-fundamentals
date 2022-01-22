@@ -27,7 +27,7 @@ public class PhysicsWorld2D : MonoBehaviour
     {
         foreach (var rb in rbs)
         {
-            rb.Velocity += rb.Acceleration * dt;
+            rb.Velocity += (rb.Force * rb.InverseMass * dt);
             rb.Position += rb.Velocity * dt;
         }
     }
