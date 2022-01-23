@@ -89,6 +89,36 @@ public class SimpleRigidbody2D : MonoBehaviour
         NetTorque = InstantNetTorque = 0;
     }
 
+    public void AddForceAtPosition(Vector2 force, Vector2 pos, SimpleForceMode mode)
+    {
+        AddForce(force, mode);
+
+        /* var d = Position - pos; */
+        /* if (d != Vector2.zero) */
+        /* { */
+        /*     var torque = Vector3.Cross(force, d); */
+        /*     AddTorque(torque.z, mode); */
+        /* } */
+
+        //Versao sem Cross Product
+
+        var dy = pos.y - Position.y;
+        if (!Mathf.Approximately(dy, 0))
+        {
+            var torque = -dy * force.x;
+            AddTorque(torque, mode);
+            Debug.Log(torque);
+        }
+
+        var dx = pos.x - Position.x;
+        if (!Mathf.Approximately(dx, 0))
+        {
+            var torque = dx * force.y;
+            AddTorque(torque, mode);
+            Debug.Log(torque);
+        }
+    }
+
     public void AddForce(Vector2 force, SimpleForceMode mode)
     {
         switch (mode)
