@@ -380,6 +380,7 @@ GameObject:
   - component: {fileID: 1516476101}
   - component: {fileID: 1516476100}
   - component: {fileID: 1516476099}
+  - component: {fileID: 1516476098}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -387,6 +388,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1516476098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516476097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f31a63eda01fc40b3806dbbe32153d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 1
 --- !u!114 &1516476099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,7 +413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f08e4e9452de8ca40bcaf4654b2d243f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 10
   Velocity: {x: 0, y: 0}
   <LinearDrag>k__BackingField: 0.2
   AngularVelocity: 0

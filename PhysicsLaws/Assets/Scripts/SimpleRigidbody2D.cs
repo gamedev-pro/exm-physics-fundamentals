@@ -17,11 +17,9 @@ public enum SimpleForceMode
     VelocityChange
 }
 
+[RequireComponent(typeof(Shape2D))]
 public class SimpleRigidbody2D : MonoBehaviour
 {
-
-    [SerializeField] private float mass = 1;
-
     public Vector2 Velocity;
 
     [field: SerializeField]
@@ -41,20 +39,23 @@ public class SimpleRigidbody2D : MonoBehaviour
         set => transform.position = value;
     }
 
+    //Orientation in radians
     public float Orientation
     {
-        get => transform.rotation.eulerAngles.z;
+        get => transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
         set
         {
             var rot = transform.rotation.eulerAngles;
-            rot.z = value;
+            rot.z = value * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(rot);
         }
     }
 
-    public float InverseMass { get; private set; }
+    //TODO (perf): fazer cache do componente
+    private Shape2D Shape => GetComponent<Shape2D>();
 
-    public float Mass => mass;
+    public float InverseMass => Shape.InverseMass;
+    public float Mass => Shape.Mass;
 
     public Vector2 InstantNetForce { get; private set; }
 
@@ -62,7 +63,6 @@ public class SimpleRigidbody2D : MonoBehaviour
 
     private void Awake()
     {
-        UpdateInverseMass();
         //TODO: PhysicsWorld2D deve ser um singleton
         var physicsWorld = FindObjectOfType<PhysicsWorld2D>();
         physicsWorld.Register(this);
@@ -76,17 +76,6 @@ public class SimpleRigidbody2D : MonoBehaviour
         {
             physicsWorld.Unregister(this);
         }
-    }
-
-    private void OnValidate()
-    {
-        UpdateInverseMass();
-    }
-
-    private void UpdateInverseMass()
-    {
-        Assert.IsFalse(Mathf.Approximately(mass, 0), "0 mass not accepted");
-        InverseMass = Mathf.Approximately(mass, 0) ? 0 : 1.0f / mass;
     }
 
     public void ResetForces()
