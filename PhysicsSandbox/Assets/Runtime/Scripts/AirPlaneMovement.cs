@@ -17,6 +17,10 @@ public class AirPlaneMovement : MonoBehaviour
     [SerializeField] private float drag = 0.5f;
     [SerializeField] private float angularDrag = 10;
 
+    [SerializeField]
+    [Range(0, 80)]
+    private float xRotClamp = 70;
+
     [Header("Visuals")]
     [SerializeField] private Transform graphics;
     [SerializeField] private float maxVisualRollAngle = 60;
@@ -66,6 +70,11 @@ public class AirPlaneMovement : MonoBehaviour
         );
 
         rb.AddRelativeTorque(torque);
+
+        var correctedRot = rb.rotation.eulerAngles;
+        correctedRot.z = 0;
+        correctedRot.x = ClampAngle(correctedRot.x, -xRotClamp, xRotClamp);
+        rb.rotation = Quaternion.Euler(correctedRot);
 
         var graphicsLocalRotation = graphics.localEulerAngles;
         graphicsLocalRotation.z = Mathf.MoveTowardsAngle(graphicsLocalRotation.z, -maxVisualRollAngle * yawInput, Time.fixedDeltaTime * visualRollAcc);
