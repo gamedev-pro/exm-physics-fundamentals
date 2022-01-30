@@ -92,6 +92,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionDelay: 3
+  explosionRadius: 2
+  explosionForce: 10
+  upwardsModifider: 2
+  explosionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   explosionCueColor: {r: 0.24528301, g: 0.008098972, b: 0.008098972, a: 1}
   explosionParticles: {fileID: 8841684218273023521}
 --- !u!23 &1628019856364720270

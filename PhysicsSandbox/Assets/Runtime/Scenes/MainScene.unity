@@ -2250,7 +2250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d403836ff965c4da349923c64d5a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 50
+  thrust: 0
   yawTorque: 10
   pitchTorque: 5
   steeringSmoothSpeed: 1
