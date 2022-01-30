@@ -12,6 +12,8 @@ public class AirPlaneMovement : MonoBehaviour
     [SerializeField] private float yawTorque = 30;//Rotacao no eixo vertical ("y") do aviao
     [SerializeField] private float pitchTorque = 15;//rotacao no eixo direito ("x") do aviao
 
+    [SerializeField] private float steeringSmoothSpeed = 1.5f;
+
     [Header("RigidBody")]
     [SerializeField] private float mass = 10;
     [SerializeField] private float drag = 0.5f;
@@ -28,8 +30,8 @@ public class AirPlaneMovement : MonoBehaviour
 
     private Rigidbody rb;
 
-    private float yawInput;
-    private float pitchInput;
+    private Vector2 frameSteerInput;
+    private Vector2 steerInput;
 
     private void Awake()
     {
@@ -54,30 +56,38 @@ public class AirPlaneMovement : MonoBehaviour
         /* rb.velocity = Vector3.MoveTowards(rb.velocity, transform.forward * maxSpeed, Time.fixedDeltaTime * acceleration); */
     }
 
-    private static float ClampAngle(float angle, float from, float to)
+    private static float To180Angle(float angle)
     {
-        if (angle < 0f) angle = 360 + angle;
-        if (angle > 180f) return Mathf.Max(angle, 360 + from);
-        return Mathf.Min(angle, to);
+        angle = angle % 360;
+        return angle > 180 ? angle - 360 : angle;
     }
 
     private void UpdateSteering()
     {
+        steerInput = Vector2.Lerp(steerInput, frameSteerInput, Time.fixedDeltaTime * steeringSmoothSpeed);
         var torque = new Vector3(
-            pitchInput * pitchTorque,
-            yawInput * yawTorque,
+            steerInput.x * pitchTorque,
+            steerInput.y * yawTorque,
             0
         );
 
+        var xRot = To180Angle(rb.rotation.eulerAngles.x);
+        if ((frameSteerInput.x > 0 && xRot > xRotClamp) ||
+            (frameSteerInput.x < 0 && xRot < -xRotClamp))
+        {
+            steerInput.x = 0;
+            torque.x = 0;
+        }
+
         rb.AddRelativeTorque(torque);
 
+        //Force no Z rotation
         var correctedRot = rb.rotation.eulerAngles;
         correctedRot.z = 0;
-        correctedRot.x = ClampAngle(correctedRot.x, -xRotClamp, xRotClamp);
         rb.rotation = Quaternion.Euler(correctedRot);
 
         var graphicsLocalRotation = graphics.localEulerAngles;
-        graphicsLocalRotation.z = Mathf.MoveTowardsAngle(graphicsLocalRotation.z, -maxVisualRollAngle * yawInput, Time.fixedDeltaTime * visualRollAcc);
+        graphicsLocalRotation.z = Mathf.MoveTowardsAngle(graphicsLocalRotation.z, -maxVisualRollAngle * steerInput.y, Time.fixedDeltaTime * visualRollAcc);
         graphics.localEulerAngles = graphicsLocalRotation;
     }
 
@@ -94,10 +104,8 @@ public class AirPlaneMovement : MonoBehaviour
         rb.angularDrag = angularDrag;
     }
 
-    public void SetSteerInput(float pitch, float yaw)
+    public void SetSteerInput(Vector2 newFrameSteerInput)
     {
-        pitchInput = pitch;
-        yawInput = yaw;
+        frameSteerInput = newFrameSteerInput;
     }
-
 }

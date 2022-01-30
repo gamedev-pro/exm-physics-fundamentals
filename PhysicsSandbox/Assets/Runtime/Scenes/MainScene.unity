@@ -1941,6 +1941,7 @@ MonoBehaviour:
   thrust: 50
   yawTorque: 10
   pitchTorque: 5
+  steeringSmoothSpeed: 1
   mass: 25
   drag: 1.2
   angularDrag: 10
