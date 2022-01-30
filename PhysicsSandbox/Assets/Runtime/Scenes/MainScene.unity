@@ -1586,6 +1586,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7720317778423664239, guid: ce17c8ae530117440bbe56c781c9e515, type: 3}
   m_PrefabInstance: {fileID: 7720317778765099352}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1051803813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1051803814}
+  m_Layer: 7
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1051803814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051803813}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.235}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1384245576}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1107640229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,6 +2214,7 @@ GameObject:
   - component: {fileID: 1384245579}
   - component: {fileID: 1384245581}
   - component: {fileID: 1384245580}
+  - component: {fileID: 1384245582}
   m_Layer: 7
   m_Name: AirPlane
   m_TagString: Untagged
@@ -2203,6 +2234,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 685040275}
+  - {fileID: 1051803814}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2286,6 +2318,22 @@ CapsuleCollider:
   m_Height: 0.46
   m_Direction: 2
   m_Center: {x: -0.003, y: 0.02, z: 0}
+--- !u!114 &1384245582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384245575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a984919d9d7732345acf287f618e5b7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzle: {fileID: 1051803814}
+  bombPrefab: {fileID: -7011324027661388691, guid: 77e63fdc92a3bdc4faa6277ff3da831e, type: 3}
+  shootForce: 10
+  rof: 2
 --- !u!1 &1405414816
 GameObject:
   m_ObjectHideFlags: 0
