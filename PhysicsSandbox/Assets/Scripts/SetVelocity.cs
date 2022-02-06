@@ -13,7 +13,7 @@ public class SetVelocity : MonoBehaviour
         {
             var rb = GetComponent<Rigidbody>();
             rb.velocity = velocity;
-            rb.maxAngularVelocity = Mathf.Infinity;
+            rb.maxAngularVelocity = float.MaxValue;
             rb.angularVelocity = angularVelocity;
             enabled = false;
         }
@@ -21,7 +21,7 @@ public class SetVelocity : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, velocity);
     }
 }
