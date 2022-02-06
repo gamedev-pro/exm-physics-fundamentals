@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AirPlaneMovement))]
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody rb;
+    private AirPlaneMovement airPlaneMovement;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        airPlaneMovement = GetComponent<AirPlaneMovement>();
     }
-    private void FixedUpdate()
+
+    private void Update()
     {
-        var moveForce = transform.forward * 5;
-        rb.AddForce(moveForce);
+        var frameInput = new Vector2(Input.GetAxisRaw("Vertical"), Input.GetAxisRaw("Horizontal"));
+        airPlaneMovement.SetSteerInput(frameInput);
     }
 }

@@ -8,8 +8,11 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 arm;
 
-    private void LateUpdate()
+    [SerializeField] private float followSmoothAcc = 20;
+
+    private void FixedUpdate()
     {
-        transform.position = target.position + arm;
+        transform.rotation = Quaternion.Slerp(transform.rotation, target.rotation, Time.fixedDeltaTime * followSmoothAcc);
+        transform.position = target.position + transform.rotation * arm;
     }
 }
