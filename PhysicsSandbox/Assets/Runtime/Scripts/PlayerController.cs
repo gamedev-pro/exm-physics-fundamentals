@@ -5,16 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(AirPlaneMovement))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private ROFWeapon weapon;
     private AirPlaneMovement airPlaneMovement;
-    /* private BombLauncher projectileLauncher; */
-
-    private MachineGun machineGun;
 
     private void Awake()
     {
         airPlaneMovement = GetComponent<AirPlaneMovement>();
-        /* projectileLauncher = GetComponent<BombLauncher>(); */
-        machineGun = GetComponentInChildren<MachineGun>();
     }
 
     private void Update()
@@ -22,17 +18,17 @@ public class PlayerController : MonoBehaviour
         var frameInput = new Vector2(Input.GetAxisRaw("Vertical"), Input.GetAxisRaw("Horizontal"));
         airPlaneMovement.SetSteerInput(frameInput);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (weapon != null)
         {
-            machineGun.StartShoot();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                weapon.StartShoot();
+            }
+            else if (Input.GetKeyUp(KeyCode.Space))
+            {
+                weapon.StopShoot();
+            }
         }
-        else if (Input.GetKeyUp(KeyCode.Space))
-        {
-            machineGun.StopShoot();
-        }
-        /* if (Input.GetKey(KeyCode.Space)) */
-        /* { */
-        /*     projectileLauncher.TryShoot(); */
-        /* } */
+
     }
 }
